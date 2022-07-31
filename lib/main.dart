@@ -13,12 +13,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,18 +82,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Container(
                         height: MediaQuery.of(context).size.height - 300.0,
                         child: ListView(children: [
-                          _buildFoodItem('assets/plate1.png',
-                              'Salmon bowl     ', '\$26.00'),
-                          _buildFoodItem('assets/plate2.png',
-                              'Spring bowl       ', '\$26.00'),
-                          _buildFoodItem('assets/plate3.png', 'Avocado bowl   ',
-                              '\$26.00'),
-                          _buildFoodItem('assets/plate4.png',
-                              'Berry bowl         ', '\$26.00'),
-                          _buildFoodItem('assets/plate5.png',
-                              'Tuna bowl          ', '\$26.00'),
-                          _buildFoodItem('assets/plate6.png',
-                              'Meat bowl          ', '\$26.00'),
+                          _buildFoodItem('assets/plate1.png', 'Salmon bowl',
+                              '\$26.00', context),
+                          _buildFoodItem('assets/plate2.png', 'Spring bowl',
+                              '\$26.00', context),
+                          _buildFoodItem('assets/plate3.png', 'Avocado bowl',
+                              '\$26.00', context),
+                          _buildFoodItem('assets/plate4.png', 'Berry bowl',
+                              '\$26.00', context),
+                          _buildFoodItem('assets/plate5.png', 'Tuna bowl',
+                              '\$26.00', context),
+                          _buildFoodItem('assets/plate6.png', 'Meat bowl',
+                              '\$26.00', context),
                         ]))),
               ],
             ),
@@ -108,61 +103,66 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _buildFoodItem(String imgPath, String foodName, String price) {
+  Widget _buildFoodItem(
+      String imgPath, String foodName, String price, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 10.0, right: 9.0, top: 10.0),
-        child: InkWell(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => DetailsPage(
-                      heroTag: imgPath, foodName: foodName, foodPrice: price)));
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: Color.fromARGB(255, 237, 232, 232).withOpacity(0.5),
-                  ),
-                  child: Row(children: [
-                    Hero(
-                        tag: imgPath,
-                        child: Image(
-                            image: AssetImage(imgPath),
-                            fit: BoxFit.cover,
-                            height: 75.0,
-                            width: 75.0)),
-                    SizedBox(width: 10.0),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(foodName,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.bold)),
-                          Text(price,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 134, 161, 37)))
-                        ]),
-                    SizedBox(width: 80),
-                    IconButton(
-                        icon: Icon(Icons.add),
-                        color: Colors.black,
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DetailsPage(
-                                  heroTag: imgPath,
-                                  foodName: foodName,
-                                  foodPrice: price)));
-                        }),
-                  ]),
-                ),
-              ],
-            )));
+      padding: EdgeInsets.only(left: 10.0, right: 9.0, top: 10.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => DetailsPage(
+                  heroTag: imgPath, foodName: foodName, foodPrice: price)));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Color.fromARGB(255, 237, 232, 232).withOpacity(0.5),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                child: Row(children: [
+                  Hero(
+                      tag: imgPath,
+                      child: Image(
+                          image: AssetImage(imgPath),
+                          fit: BoxFit.cover,
+                          height: 75.0,
+                          width: 75.0)),
+                  SizedBox(width: 10.0),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(foodName,
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold)),
+                        Text(price,
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 134, 161, 37)))
+                      ]),
+                ]),
+              ),
+              IconButton(
+                icon: Icon(Icons.add),
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DetailsPage(
+                          heroTag: imgPath,
+                          foodName: foodName,
+                          foodPrice: price)));
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
