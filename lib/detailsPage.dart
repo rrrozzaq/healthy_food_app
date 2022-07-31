@@ -13,11 +13,32 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   var selectedCard = 'WEIGHT';
+  int number = 0;
+
+  void tombolAdd() {
+    setState(
+      () {
+        number += 1;
+      },
+    );
+  }
+
+  void tombolRemove() {
+    setState(
+      () {
+        number -= 1;
+
+        if (number <= 0) {
+          number = 0;
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor:  Color.fromARGB(255, 64, 188, 29),
+        backgroundColor: Color.fromARGB(255, 64, 188, 29),
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -97,19 +118,20 @@ class _DetailsPageState extends State<DetailsPage> {
                           width: 125.0,
                           height: 40.0,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(17.0),
-                              color:  Color.fromARGB(255, 64, 188, 29),),
+                            borderRadius: BorderRadius.circular(17.0),
+                            color: Color.fromARGB(255, 64, 188, 29),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               InkWell(
-                                onTap: () {},
+                                onTap: tombolRemove,
                                 child: Container(
                                   height: 25.0,
                                   width: 25.0,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(7.0),
-                                      color:   Color.fromARGB(255, 64, 188, 29),),
+                                      color: Colors.grey),
                                   child: Center(
                                     child: Icon(
                                       Icons.remove,
@@ -119,13 +141,15 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                 ),
                               ),
-                              Text('2',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 15.0)),
+                              Text(
+                                number.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 15.0),
+                              ),
                               InkWell(
-                                onTap: () {},
+                                onTap: tombolAdd,
                                 child: Container(
                                   height: 25.0,
                                   width: 25.0,
@@ -135,12 +159,12 @@ class _DetailsPageState extends State<DetailsPage> {
                                   child: Center(
                                     child: Icon(
                                       Icons.add,
-                                      color:   Color.fromARGB(255, 64, 188, 29),
+                                      color: Colors.grey,
                                       size: 20.0,
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         )
@@ -174,7 +198,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             color: Colors.black),
                         height: 50.0,
                         child: Center(
-                          child: Text('\$52.00',
+                          child: Text(
+                              '\$' + (number.toDouble() * 26.00).toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Montserrat')),
@@ -197,8 +222,9 @@ class _DetailsPageState extends State<DetailsPage> {
             curve: Curves.easeIn,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              color:
-                  cardTitle == selectedCard ?   Color.fromARGB(255, 64, 188, 29) : Colors.white,
+              color: cardTitle == selectedCard
+                  ? Color.fromARGB(255, 64, 188, 29)
+                  : Colors.white,
               border: Border.all(
                   color: cardTitle == selectedCard
                       ? Colors.transparent
